@@ -20,12 +20,12 @@ var stacks = new Stack<char>[]
 
 var data = input.Select(
     line => line.Split(' ')
-    .Where((val, index) => index % 2 != 0)
-    .Select(x => int.Parse(x))
-    .ToArray());
+        .Where((val, index) => index % 2 != 0)
+        .Select(x => int.Parse(x))
+        .ToArray());
 
 var tempStack = new Stack<char>();
-foreach(var command in data)
+foreach (var command in data)
 {
     var amount = command[0];
     var from = command[1] - 1;
