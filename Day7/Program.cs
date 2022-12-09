@@ -16,11 +16,11 @@ Console.WriteLine($"The sum size of directories with size at most 100000: {resul
 
 // Part 2
 var totalUsedSpace = directorySizes[directorySizes.Count - 1];
-var totalUnusedSpace = TotalDiskSpace - totalUsedSpace; 
+var totalUnusedSpace = TotalDiskSpace - totalUsedSpace;
 var spaceToFree = UnusedDiskSpaceLimit - totalUnusedSpace;
 directorySizes.Sort();
-var result2 = 0; 
-foreach(var size in directorySizes)
+var result2 = 0;
+foreach (var size in directorySizes)
 {
     if (size >= spaceToFree)
     {
@@ -129,6 +129,7 @@ class FileObject : BaseObject
     {
         Size = size;
     }
+    
     public int Size { get; protected set; }
 }
 
