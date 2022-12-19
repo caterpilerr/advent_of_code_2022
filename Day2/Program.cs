@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
-const string FilePath = "input.txt";
+const string filePath = "input.txt";
 
-var input = File.ReadAllLines(FilePath);
+var input = File.ReadAllLines(filePath);
 var mapScore = new Dictionary<char, int>
 {
     ['A'] = 1,
@@ -43,8 +43,8 @@ Console.WriteLine($"Total score according to second strategy: {totalScorePart2}"
 int CountScorePart1(char opponent, char player, Dictionary<char, int> scoreMap)
 {
     // X -> A, Y -> B, Z -> C
-    player = (char)((int)player - 23);
-    int score = scoreMap[player];
+    player = (char)(player - 23);
+    var score = scoreMap[player];
     if (opponent == player)
     {
         score += scoreMap['D'];
@@ -69,16 +69,16 @@ int CountScorePart1(char opponent, char player, Dictionary<char, int> scoreMap)
 int CountScorePart2(
     char opponent,
     char player,
-    Dictionary<char, int> scoreMap,
-    Dictionary<char, char> shapeToWin,
-    Dictionary<char, char> shapeToLose)
+    IReadOnlyDictionary<char, int> scoreMap,
+    IReadOnlyDictionary<char, char> shapeToWinMap,
+    IReadOnlyDictionary<char, char> shapeToLoseMap)
 {
     var score = 0;
-    var playerShape = '.';
+    char playerShape;
     switch (player)
     {
         case 'X':
-            playerShape = shapeToLose[opponent];
+            playerShape = shapeToLoseMap[opponent];
             score += scoreMap['L'];
             break;
         case 'Y':
@@ -86,7 +86,7 @@ int CountScorePart2(
             score += scoreMap['D'];
             break;
         case 'Z':
-            playerShape = shapeToWin[opponent];
+            playerShape = shapeToWinMap[opponent];
             score += scoreMap['W'];
             break;
         default:

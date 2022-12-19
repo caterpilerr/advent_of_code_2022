@@ -1,27 +1,25 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System.Collections.Generic;
+const string filePath = "input.txt";
 
-const string FilePath = "input.txt";
-
-var input = File.ReadAllLines(FilePath);
+var input = File.ReadAllLines(filePath);
 
 var stacks = new Stack<char>[]
 {
-    new Stack<char> (new [] {'W', 'B', 'D', 'N', 'C', 'F', 'J'}),
-    new Stack<char> (new [] {'P', 'Z', 'V', 'Q', 'L', 'S', 'T'}),
-    new Stack<char> (new [] {'P', 'Z', 'B', 'G', 'J', 'T'}),
-    new Stack<char> (new [] {'D', 'T', 'L', 'J', 'Z', 'B', 'H', 'C'}),
-    new Stack<char> (new [] {'G', 'V', 'B', 'J', 'S'}),
-    new Stack<char> (new [] {'P', 'S', 'Q'}),
-    new Stack<char> (new [] {'B', 'V', 'D', 'F', 'L', 'M', 'P', 'N'}),
-    new Stack<char> (new [] {'P', 'S', 'M', 'F', 'B', 'D', 'L', 'R'}),
-    new Stack<char> (new [] {'V', 'D', 'T', 'R'}),
+    new(new[] { 'W', 'B', 'D', 'N', 'C', 'F', 'J' }),
+    new(new[] { 'P', 'Z', 'V', 'Q', 'L', 'S', 'T' }),
+    new(new[] { 'P', 'Z', 'B', 'G', 'J', 'T' }),
+    new(new[] { 'D', 'T', 'L', 'J', 'Z', 'B', 'H', 'C' }),
+    new(new[] { 'G', 'V', 'B', 'J', 'S' }),
+    new(new[] { 'P', 'S', 'Q' }),
+    new(new[] { 'B', 'V', 'D', 'F', 'L', 'M', 'P', 'N' }),
+    new(new[] { 'P', 'S', 'M', 'F', 'B', 'D', 'L', 'R' }),
+    new(new[] { 'V', 'D', 'T', 'R' }),
 };
 
 var data = input.Select(
     line => line.Split(' ')
-        .Where((val, index) => index % 2 != 0)
-        .Select(x => int.Parse(x))
+        .Where((_, index) => index % 2 != 0)
+        .Select(int.Parse)
         .ToArray());
 
 var tempStack = new Stack<char>();

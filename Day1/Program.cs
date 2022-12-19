@@ -1,8 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
-const string FilePath= "input.txt";
+const string filePath= "input.txt";
 
-var input = File.ReadAllLines(FilePath);
-var top3Elves = new int[] {0, 0, 0};
+var input = File.ReadAllLines(filePath);
+var top3Elves = new[] {0, 0, 0};
 var i = 0;
 while(i < input.Length)
 {
@@ -22,21 +22,21 @@ var sum =  top3Elves.Sum();
 Console.WriteLine($"Top elf calories: {top3Elves[0]}");
 Console.WriteLine($"Max calories among top three elves: {sum}");
 
-void CheckWithTopElves(int[] topElves, int newElf)
+void CheckWithTopElves(IList<int> topElves, int newElf)
 {
-    if (top3Elves[0] < newElf)
+    if (topElves[0] < newElf)
     {
-        top3Elves[2] = top3Elves[1];
-        top3Elves[1] = top3Elves[0];
-        top3Elves[0] = newElf;
+        topElves[2] = top3Elves[1];
+        topElves[1] = top3Elves[0];
+        topElves[0] = newElf;
     }
-    else if (top3Elves[1] < newElf)
+    else if (topElves[1] < newElf)
     {
-        top3Elves[2] = top3Elves[1];
-        top3Elves[1] = newElf;
+        topElves[2] = top3Elves[1];
+        topElves[1] = newElf;
     }
-    else if (top3Elves[2] < newElf)
+    else if (topElves[2] < newElf)
     {
-        top3Elves[2] = newElf;
+        topElves[2] = newElf;
     }
 }

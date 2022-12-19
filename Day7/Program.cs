@@ -1,33 +1,25 @@
 ﻿// See https://aka.ms/new-console-template for more information
-const string FilePath = "input.txt";
-const int UppermostDirectoryLimit = 100000;
-const int TotalDiskSpace = 70000000;
-const int UnusedDiskSpaceLimit = 30000000;
+const string filePath = "input.txt";
+const int uppermostDirectoryLimit = 100000;
+const int totalDiskSpace = 70000000;
+const int unusedDiskSpaceLimit = 30000000;
 
-var input = File.ReadAllLines(FilePath);
+var input = File.ReadAllLines(filePath);
 
 // Part 1
-var root = ParseInputToDirectories(input);
+var rootObject = ParseInputToDirectories(input);
 var directorySizes = new List<int>();
-GetDirectoriesSizes(root!, directorySizes);
-var result1 = directorySizes.Where(x => x <= UppermostDirectoryLimit).Sum();
+GetDirectoriesSizes(rootObject!, directorySizes);
+var result1 = directorySizes.Where(x => x <= uppermostDirectoryLimit).Sum();
 
 Console.WriteLine($"The sum size of directories with size at most 100000: {result1}");
 
 // Part 2
-var totalUsedSpace = directorySizes[directorySizes.Count - 1];
-var totalUnusedSpace = TotalDiskSpace - totalUsedSpace;
-var spaceToFree = UnusedDiskSpaceLimit - totalUnusedSpace;
+var totalUsedSpace = directorySizes[^1];
+var totalUnusedSpace = totalDiskSpace - totalUsedSpace;
+var spaceToFree = unusedDiskSpaceLimit - totalUnusedSpace;
 directorySizes.Sort();
-var result2 = 0;
-foreach (var size in directorySizes)
-{
-    if (size >= spaceToFree)
-    {
-        result2 = size;
-        break;
-    }
-}
+var result2 = directorySizes.FirstOrDefault(size => size >= spaceToFree);
 
 Console.WriteLine($"The size of directory with minimal size to free enough space: {result2}");
 
@@ -36,13 +28,14 @@ int GetDirectoriesSizes(DirectoryObject current, List<int> sizes)
     var size = 0;
     foreach (var item in current.Content.Values)
     {
-        if (item is FileObject file)
+        switch (item)
         {
-            size += file.Size;
-        }
-        else if (item is DirectoryObject dir)
-        {
-            size += GetDirectoriesSizes(dir, sizes);
+            case FileObject file:
+                size += file.Size;
+                break;
+            case DirectoryObject dir:
+                size += GetDirectoriesSizes(dir, sizes);
+                break;
         }
     }
 
@@ -51,44 +44,42 @@ int GetDirectoriesSizes(DirectoryObject current, List<int> sizes)
     return size;
 }
 
-DirectoryObject? ParseInputToDirectories(string[] input)
+DirectoryObject? ParseInputToDirectories(IReadOnlyList<string> inputValue)
 {
-    var stack = new Stack<DirectoryObject>();
     DirectoryObject? root = null;
     DirectoryObject? current = null;
     var lineNumber = 0;
     var lsMode = false;
-    while (lineNumber < input.Length)
+    while (lineNumber < inputValue.Count)
     {
-        var data = input[lineNumber].Split(' ');
+        var data = inputValue[lineNumber].Split(' ');
         if (data[0] == "$")
         {
-            if (data[1] == "cd")
+            switch (data[1])
             {
-                var arg = data[2];
-                if (arg == "/")
+                case "cd":
                 {
-                    if (root is null)
+                    var arg = data[2];
+                    switch (arg)
                     {
-                        root = new DirectoryObject(arg, null);
+                        case "/":
+                            root ??= new DirectoryObject(arg, null);
+                            current = root;
+                            break;
+                        case "..":
+                            current = current?.ParentDirectory ?? current;
+                            break;
+                        default:
+                            current = current?.Content[arg] as DirectoryObject;
+                            break;
                     }
 
-                    current = root;
+                    lsMode = false;
+                    break;
                 }
-                else if (arg == "..")
-                {
-                    current = current?.ParentDirectory is not null ? current.ParentDirectory : current;
-                }
-                else
-                {
-                    current = current?.Content[arg] as DirectoryObject;
-                }
-
-                lsMode = false;
-            }
-            else if (data[1] == "ls")
-            {
-                lsMode = true;
+                case "ls":
+                    lsMode = true;
+                    break;
             }
         }
         else if (lsMode)
@@ -113,33 +104,33 @@ DirectoryObject? ParseInputToDirectories(string[] input)
     return root;
 }
 
-class BaseObject
+internal class BaseObject
 {
-    public BaseObject(string name)
+    protected BaseObject(string name)
     {
         Name = name;
     }
 
-    public string Name { get; set; }
+    private string Name { get; }
 }
 
-class FileObject : BaseObject
+internal class FileObject : BaseObject
 {
     public FileObject(string name, int size) : base(name)
     {
         Size = size;
     }
     
-    public int Size { get; protected set; }
+    public int Size { get; }
 }
 
-class DirectoryObject : BaseObject
+internal class DirectoryObject : BaseObject
 {
     public DirectoryObject(string name, DirectoryObject? parent) : base(name)
     {
         ParentDirectory = parent;
     }
 
-    public DirectoryObject? ParentDirectory { get; set; }
-    public Dictionary<string, BaseObject> Content { get; set; } = new Dictionary<string, BaseObject>();
+    public DirectoryObject? ParentDirectory { get; }
+    public Dictionary<string, BaseObject> Content { get; } = new();
 }

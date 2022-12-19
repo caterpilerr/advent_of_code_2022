@@ -1,13 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
-const string FilePath = "input.txt";
+const string filePath = "input.txt";
 
-var input = File.ReadAllLines(FilePath);
+var input = File.ReadAllLines(filePath);
 var data = new int[input.Length][];
 for (var i = 0; i < input.Length; i++)
 {
     var elvesPair = input[i].Split(',');
     data[i] = elvesPair.SelectMany(
-        elfData => elfData.Split('-').Select(symbol => int.Parse(symbol))
+        elfData => elfData.Split('-').Select(int.Parse)
     ).ToArray();
 }
 
@@ -38,5 +38,5 @@ foreach (var item in data)
 }
 
 Console.WriteLine($"The number of invalid elves pairs: {invalidPairs}");
-Console.WriteLine($"The number of ovelapping elves pairs: {overlappingPairs}");
+Console.WriteLine($"The number of overlapping elves pairs: {overlappingPairs}");
 

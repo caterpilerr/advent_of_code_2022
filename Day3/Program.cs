@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
-const string FilePath = "input.txt";
+const string filePath = "input.txt";
 
-var input = File.ReadAllLines(FilePath);
+var input = File.ReadAllLines(filePath);
 
 // Part 1
 var unorderedItems = new char[input.Length];
@@ -22,7 +22,8 @@ for (var j = 0; j < input.Length; j++)
             unorderedItems[j] = secondCompartmentItem;
             break;
         }
-        else if (secondCompartment.Contains(firstCompartmentItem))
+
+        if (secondCompartment.Contains(firstCompartmentItem))
         {
             unorderedItems[j] = firstCompartmentItem;
             break;
@@ -60,14 +61,14 @@ int CountPriorities(IEnumerable<char> data)
 {
     return data.Aggregate(0, (current, item) => item switch
     {
-        >= 'a' and <= 'z' => current += (int)(item - 'a') + 1,
-        >= 'A' and <= 'Z' => current += (int)(item - 'A') + 1 + 26,
+        >= 'a' and <= 'z' => current + (item - 'a' + 1),
+        >= 'A' and <= 'Z' => current + (item - 'A' + 1 + 26),
         _ => current
     });
 }
 
 var sumOfUnorderedItems = CountPriorities(unorderedItems);
-Console.WriteLine($"The sum of the priorites for unordered items: {sumOfUnorderedItems}");
+Console.WriteLine($"The sum of the priorities for unordered items: {sumOfUnorderedItems}");
 
 var sumOfElvesItemGroups = CountPriorities(elvesGroups);
-Console.WriteLine($"The sum of the priorites for elves groups: {sumOfElvesItemGroups}");
+Console.WriteLine($"The sum of the priorities for elves groups: {sumOfElvesItemGroups}");

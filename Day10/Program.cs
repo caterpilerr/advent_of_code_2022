@@ -1,64 +1,68 @@
 ﻿// See https://aka.ms/new-console-template for more information
-const string FilePath = "input.txt";
+const string filePath = "input.txt";
 
-var input = File.ReadAllLines(FilePath);
+var input = File.ReadAllLines(filePath);
 
-const int Addx_Cycles = 2;
-const int Noop_Cycles = 1;
+const int addXCycles = 2;
+const int noopCycles = 1;
 
 // Part 1 & 2
-var reg_x = 1;
+var regX = 1;
 var cycle = 0;
 var result = new List<int>();
 foreach (var line in input)
 {
     var data = line.Split(' ');
     var op = data[0];
-    var cycle_length = 0;
+    var cycleLength = 0;
     var value = 0;
     switch (op)
     {
         case "addx":
-            cycle_length = Addx_Cycles;
+            cycleLength = addXCycles;
             value = int.Parse(data[1]);
             break;
         case "noop":
-            cycle_length = Noop_Cycles;
+            cycleLength = noopCycles;
             value = 0;
             break;
     }
 
-    for (var i = 0; i < cycle_length; i++)
+    for (var i = 0; i < cycleLength; i++)
     {
         cycle++;
-        var offset = (cycle - 1) % 40;
-        if (offset >= reg_x - 1 &&
-            offset <= reg_x + 1)
-        {
-            Console.Write('#');
-        }
-        else
-        {
-            Console.Write('.');
-        }
-
-        if (offset == 39)
-        {
-            Console.Write('\n');
-        }
-
-        CheckRegX(cycle, reg_x, result);
+        DrawPixel(cycle, regX);
+        CheckRegX(cycle, regX, result);
     }
 
-    reg_x += value;
+    regX += value;
 }
 
 Console.WriteLine($"The sum of signal strength: {result.Sum()}");
 
-void CheckRegX(int cycle, int reg, ICollection<int> sum)
+void CheckRegX(int currentCycle, int reg, ICollection<int> sum)
 {
-    if ((cycle - 20) % 40 == 0)
+    if ((currentCycle - 20) % 40 == 0)
     {
-        sum.Add(cycle * reg);
+        sum.Add(currentCycle * reg);
     }
+}
+
+void DrawPixel(int currentCycle, int currentRegX)
+{
+    var offset = (currentCycle - 1) % 40;
+    if (offset >= currentRegX - 1 &&
+        offset <= currentRegX + 1)
+    {
+        Console.Write('#');
+    }
+    else
+    {
+        Console.Write('.');
+    }
+
+    if (offset == 39)
+    {
+        Console.Write('\n');
+    } 
 }

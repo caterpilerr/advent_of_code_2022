@@ -1,14 +1,14 @@
 ﻿// See https://aka.ms/new-console-template for more information
-const string FilePath = "input.txt";
-const int PacketSyncLength = 4;
-const int MessageSyncLength = 14;
+const string filePath = "input.txt";
+const int packetSyncLength = 4;
+const int messageSyncLength = 14;
 
-var input = File.ReadAllLines(FilePath);
+var input = File.ReadAllLines(filePath);
 
 foreach (var line in input)
 {
-    var packetStart = FindMarker(line, 0, PacketSyncLength);
-    var messageStart = FindMarker(line, packetStart, MessageSyncLength);
+    var packetStart = FindMarker(line, 0, packetSyncLength);
+    var messageStart = FindMarker(line, packetStart, messageSyncLength);
     Console.WriteLine($"Number of packet index: {packetStart}");
     Console.WriteLine($"Number of message index: {messageStart}");
 }
@@ -40,15 +40,7 @@ int FindMarker(string packet, int offset, int syncLength)
     return -1;
 }
 
-bool IsWithoutDuplicates(int[] charData)
+bool IsWithoutDuplicates(IEnumerable<int> charData)
 {
-    foreach (var count in charData)
-    {
-        if (count > 1)
-        {
-            return false;
-        }
-    }
-
-    return true;
+    return charData.All(count => count <= 1);
 }

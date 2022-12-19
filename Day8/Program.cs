@@ -1,12 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
-const string FilePath = "input.txt";
+const string filePath = "input.txt";
 
-var input = File.ReadAllLines(FilePath);
+var input = File.ReadAllLines(filePath);
 var columns = input.Length;
 var rows = input[0].Length;
 
 // Part 1
-int[,][] localMax = new int[columns, rows][];
+var localMax = new int[columns, rows][];
 
 // Mark array [i, j, k, d]
 // array[0] = max from left
@@ -63,7 +63,7 @@ var visiblePoints = rows * columns - invisiblePoints;
 Console.WriteLine($"Number of visible points: {visiblePoints}");
 
 // Part 2
-int[,][] wallsIndexes = new int[columns, rows][];
+var wallsIndexes = new int[columns, rows][];
 
 // Wall array [i, j, k, d]
 // array[0] = wall from left
@@ -93,10 +93,8 @@ for (var i = 0; i < columns; i++)
                     wallsIndexes[i, j][0] = leftIndex;
                     break;
                 }
-                else
-                {
-                    leftIndex = wallsIndexes[i, leftIndex][0];
-                }
+
+                leftIndex = wallsIndexes[i, leftIndex][0];
             }
 
             if (leftIndex == 0)
@@ -119,10 +117,8 @@ for (var i = 0; i < columns; i++)
                     wallsIndexes[i, j][1] = topIndex;
                     break;
                 }
-                else
-                {
-                    topIndex = wallsIndexes[topIndex, j][1];
-                }
+
+                topIndex = wallsIndexes[topIndex, j][1];
             }
 
             if (topIndex == 0)
@@ -156,10 +152,8 @@ for (var i = columns - 1; i >= 0; i--)
                     wallsIndexes[i, j][2] = rightIndex;
                     break;
                 }
-                else
-                {
-                    rightIndex = wallsIndexes[i, rightIndex][2];
-                }
+
+                rightIndex = wallsIndexes[i, rightIndex][2];
             }
 
             if (rightIndex == rows - 1)
@@ -182,10 +176,8 @@ for (var i = columns - 1; i >= 0; i--)
                     wallsIndexes[i, j][3] = botIndex;
                     break;
                 }
-                else
-                {
-                    botIndex = wallsIndexes[botIndex, j][3];
-                }
+
+                botIndex = wallsIndexes[botIndex, j][3];
             }
 
             if (botIndex == rows - 1)

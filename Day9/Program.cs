@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
-const string FilePath = "input.txt";
+const string filePath = "input.txt";
 
-var input = File.ReadAllLines(FilePath);
+var input = File.ReadAllLines(filePath);
 
 // Part 1
 var set1 = new HashSet<(int X, int Y)>();
@@ -33,7 +33,7 @@ foreach (var line in input)
 
         followUp = GetFollowUp(head, followUp);
         
-        if (!set1.Contains(followUp)) ;
+        if (!set1.Contains(followUp)) 
         {
             set1.Add(followUp);
         }
@@ -78,17 +78,17 @@ foreach (var line in input)
         var current = head;
         for (var j = 0; j < tail.Count; j++)
         {
-            var i_modified = GetFollowUp(current, tail[j]);
-            if (i_modified == tail[j])
+            var iModified = GetFollowUp(current, tail[j]);
+            if (iModified == tail[j])
             {
                 break;
             }
 
-            tail[j] = i_modified;
+            tail[j] = iModified;
             current = tail[j];
         }
 
-        set2.Add(tail[tail.Count - 1]);
+        set2.Add(tail[^1]);
     }
 }
 
@@ -103,22 +103,24 @@ Console.WriteLine($"Number of unique visited cells for part 2: {set2.Count}");
         return second;
     }
 
-    if (deltaX > 0)
+    switch (deltaX)
     {
-        second.Item1++;
-    }
-    else if (deltaX < 0)
-    {
-        second.Item1--;
+        case > 0:
+            second.Item1++;
+            break;
+        case < 0:
+            second.Item1--;
+            break;
     }
 
-    if (deltaY > 0)
+    switch (deltaY)
     {
-        second.Item2++;
-    }
-    else if (deltaY < 0)
-    {
-        second.Item2--;
+        case > 0:
+            second.Item2++;
+            break;
+        case < 0:
+            second.Item2--;
+            break;
     }
 
     return second;
