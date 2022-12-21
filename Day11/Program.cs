@@ -61,39 +61,6 @@ var monkeys = new MonkeyPack
     )
 };
 
-// var monkeys = new MonkeyPack()
-// {
-//     new Monkey(
-//         new[]{ 79, 98 },
-//         worrines => worrines * 19,
-//         worrines => worrines % 23 == 0,
-//         2,
-//         3
-//     ),
-//     new Monkey(
-//         new[]{ 54, 65, 75, 74 },
-//         worrines => worrines + 6,
-//         worrines => worrines % 19 == 0,
-//         2,
-//         0
-//     ),
-//     new Monkey(
-//         new[]{ 79, 60, 97 },
-//         worrines => worrines * worrines,
-//         worrines => worrines % 13 == 0,
-//         1,
-//         3
-//     ),
-//     new Monkey(
-//         new[]{ 74 },
-//         worrines => worrines + 3,
-//         worrines => worrines % 17 == 0,
-//         0,
-//         1
-//     )
-// };
-
-
 // Part 1 & 2
 // For part 2 Monkey.MakeTurn(nervous: true)
 const int numberOfRounds = 10000;
