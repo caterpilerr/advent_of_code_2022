@@ -72,7 +72,7 @@ while (queue.Count > 0)
 
         if (!isNearestAPointFound && map[x][y] == 'a')
         {
-            Console.WriteLine($"Fewest steps to nearest a point: {depth}");
+            Console.WriteLine($"Fewest steps to nearest 'a' point: {depth}");
             isNearestAPointFound = true;
         }
 
