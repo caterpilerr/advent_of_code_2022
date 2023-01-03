@@ -75,14 +75,6 @@ Intervals FindInvalidPositions(IReadOnlyList<(int X, int Y)> beacons, IReadOnlyL
             var intervalStart = sensor.X - xDelta;
             var intervalEnd = sensor.X + xDelta;
             intervals.Add(new[] { intervalStart, intervalEnd });
-
-            // Console.WriteLine("Result:");
-            // foreach (var g in intervals.Data)
-            // {
-            //     Console.Write($"{g[0]} - {g[1]} ,");
-            // }
-            //
-            // Console.Write("\n");
         }
     }
 
