@@ -23,7 +23,6 @@ const int yCheckCoordinate = 2000000;
 var invalidPositions = FindInvalidPositions(beaconsInput, sensorsInput, null, null, yCheckCoordinate);
 var invalidPositionsCount = invalidPositions.Count;
 
-// 4827924
 // Remove places occupied by beacons
 var checkedPoints = new HashSet<(int, int)>();
 foreach (var beacon in beaconsInput.Where(beacon => !checkedPoints.Contains(beacon)))
